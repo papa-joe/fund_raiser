@@ -8,10 +8,25 @@ class Api::V1::RestaurantsController < ApplicationController
     end
 
     def create
+
+        if !params[:monday].present? || !params[:tuesday].present? || !params[:wednesday].present? || !params[:thursday].present? || !params[:friday].present? || !params[:saturday].present? || !params[:sunday].present?
+            render json: { status: "failed", message: "Select days of operation"}
+            return
+        end
+
         @restaurant = Restaurant.new({name: params[:name],firstname: params[:firstname],lastname: params[:lastname],email: params[:email],phone: params[:phone],password: params[:password],location_no: params[:location_no],from_time: params[:from_time],to_time: params[:to_time],avg_menu_price: params[:avg_menu_price],percent_donation: params[:percent_donation],website: params[:website],logo: params[:logo]})
 
         if @restaurant.save
-            render json: @restaurant, status: :created
+
+            @res_day = Restaurant.find_by_email(params[:email])
+
+            day = @res_day.days.build({monday: params[:monday], tuesday: params[:tuesday], wednesday: params[:wednesday], thursday: params[:thursday], friday: params[:friday], saturday: params[:saturday], sunday: params[:sunday]})
+
+            if day.save
+                render json: @restaurant, status: :created
+            else
+                render json: @restaurant.errors, status: :unprocessable_entity
+            end
         else
             render json: @restaurant.errors, status: :unprocessable_entity
         end

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :restaurants, only: %i[show create update destroy]
       resources :tokens, only: [:create]
+      resources :days, only: %i[show index create update]
     end
   end
 end

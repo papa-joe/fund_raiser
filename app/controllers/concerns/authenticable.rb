@@ -9,4 +9,10 @@ module Authenticable
         @current_restaurant = Restaurant.find(decoded[:restaurant_id]) rescue
         ActiveRecord::RecordNotFound
     end
+
+    protected
+
+    def check_login
+        head :forbidden unless self.current_restaurant
+    end
 end
