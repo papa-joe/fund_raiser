@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_23_124932) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_23_155147) do
   create_table "locations", charset: "utf8mb4", force: :cascade do |t|
     t.string "address"
     t.string "city"
@@ -51,6 +51,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_23_124932) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_restaurants_on_email", unique: true
+  end
+
+  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+    t.string "email"
+    t.string "password_digest"
+    t.string "firstname"
+    t.string "lastname"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "locations", "restaurants"

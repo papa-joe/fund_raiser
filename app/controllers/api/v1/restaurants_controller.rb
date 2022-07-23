@@ -7,7 +7,7 @@ class Api::V1::RestaurantsController < ApplicationController
         render json: @restaurant
     end
 
-    def create
+    def sign_up
 
         if !params[:address].present? || !params[:city].present? || !params[:zipcode].present? || !params[:state].present? || !params[:phone].present? 
             render json: { status: "failed", message: "Enter at least one location"}

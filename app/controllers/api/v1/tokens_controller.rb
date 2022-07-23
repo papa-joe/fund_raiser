@@ -1,6 +1,6 @@
 class Api::V1::TokensController < ApplicationController
 
-  def create
+  def sign_in
     @restaurant = Restaurant.find_by_email(params[:email])
 
     if @restaurant&.authenticate(params[:password])
@@ -9,7 +9,28 @@ class Api::V1::TokensController < ApplicationController
         email: @restaurant.email
       }
     else
-      head :unauthorized
+      render json: {
+        status: "failed",
+        message: "Unauthenticated"
+      }
+    end
+
+  end
+
+  def login
+    @user = User.find_by_email(params[:email])
+
+    if @user&.authenticate(params[:password])
+      render json: {
+        status: "success",
+        token: JsonWebToken.encode(user_id: @user.id),
+        email: @user.email
+      }
+    else
+      render json: {
+        status: "failed",
+        message: "Unauthenticated"
+      }
     end
 
   end
