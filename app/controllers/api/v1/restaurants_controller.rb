@@ -9,27 +9,20 @@ class Api::V1::RestaurantsController < ApplicationController
 
     def create
 
-        if !params[:monday].present? || !params[:tuesday].present? || !params[:wednesday].present? || !params[:thursday].present? || !params[:friday].present? || !params[:saturday].present? || !params[:sunday].present?
-            render json: { status: "failed", message: "Select days of operation"}
-            return
-        end
-
         if !params[:address].present? || !params[:city].present? || !params[:zipcode].present? || !params[:state].present? || !params[:phone].present? 
             render json: { status: "failed", message: "Enter at least one location"}
             return
         end
 
-        @restaurant = Restaurant.new({name: params[:name],firstname: params[:firstname],lastname: params[:lastname],email: params[:email],phone: params[:phone],password: params[:password],location_no: params[:location_no],from_time: params[:from_time],to_time: params[:to_time],avg_menu_price: params[:avg_menu_price],percent_donation: params[:percent_donation],website: params[:website],logo: params[:logo]})
+        @restaurant = Restaurant.new({name: params[:name],firstname: params[:firstname],lastname: params[:lastname],email: params[:email],phone: params[:phone],password: params[:password],location_no: params[:location_no],from_time: params[:from_time],to_time: params[:to_time],avg_menu_price: params[:avg_menu_price],percent_donation: params[:percent_donation],website: params[:website],logo: params[:logo], monday: params[:monday], tuesday: params[:tuesday], wednesday: params[:wednesday], thursday: params[:thursday], friday: params[:friday], saturday: params[:saturday], sunday: params[:sunday], tax: params[:tax], leader_arrival: params[:leader_arrival], alcohol_sales: params[:alcohol_sales], coupons: params[:coupons]})
 
         if @restaurant.save
 
             @res_day = Restaurant.find_by_email(params[:email])
 
-            day = @res_day.days.build({monday: params[:monday], tuesday: params[:tuesday], wednesday: params[:wednesday], thursday: params[:thursday], friday: params[:friday], saturday: params[:saturday], sunday: params[:sunday]})
-
             location = @res_day.locations.build({address: params[:address], city: params[:city], zipcode: params[:zipcode], state: params[:state], phone: params[:phone]})
 
-            if day.save && location.save
+            if location.save
                 render json: @restaurant, status: :created
             else
                 render json: @restaurant.errors, status: :unprocessable_entity
@@ -43,7 +36,7 @@ class Api::V1::RestaurantsController < ApplicationController
     def update
         @restaurant = Restaurant.find(params[:id])
 
-        if @restaurant.update({firstname: params[:firstname],lastname: params[:lastname],email: params[:email],phone: params[:phone],location_no: params[:location_no],from_time: params[:from_time],to_time: params[:to_time],avg_menu_price: params[:avg_menu_price],percent_donation: params[:percent_donation],website: params[:website],logo: params[:logo]})
+        if @restaurant.update({name: params[:name],firstname: params[:firstname],lastname: params[:lastname],email: params[:email],phone: params[:phone],location_no: params[:location_no],from_time: params[:from_time],to_time: params[:to_time],avg_menu_price: params[:avg_menu_price],percent_donation: params[:percent_donation],website: params[:website],logo: params[:logo], monday: params[:monday], tuesday: params[:tuesday], wednesday: params[:wednesday], thursday: params[:thursday], friday: params[:friday], saturday: params[:saturday], sunday: params[:sunday], tax: params[:tax], leader_arrival: params[:leader_arrival], alcohol_sales: params[:alcohol_sales], coupons: params[:coupons]})
             render json: @restaurant, status: :ok
         else
             render json: @restaurant.errors, status: :unprocessable_entity

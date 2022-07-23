@@ -11,20 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2022_07_23_124932) do
-  create_table "days", charset: "utf8mb4", force: :cascade do |t|
-    t.string "monday"
-    t.string "tuesday"
-    t.string "wednesday"
-    t.string "thursday"
-    t.string "friday"
-    t.string "saturday"
-    t.string "sunday"
-    t.bigint "restaurant_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["restaurant_id"], name: "index_days_on_restaurant_id"
-  end
-
   create_table "locations", charset: "utf8mb4", force: :cascade do |t|
     t.string "address"
     t.string "city"
@@ -50,12 +36,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_23_124932) do
     t.float "avg_menu_price", null: false
     t.integer "percent_donation", null: false
     t.string "website", null: false
-    t.string "logo"
+    t.string "logo", null: false
+    t.string "monday", null: false
+    t.string "tuesday", null: false
+    t.string "wednesday", null: false
+    t.string "thursday", null: false
+    t.string "friday", null: false
+    t.string "saturday", null: false
+    t.string "sunday", null: false
+    t.string "tax", null: false
+    t.string "leader_arrival", null: false
+    t.string "alcohol_sales", null: false
+    t.string "coupons", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_restaurants_on_email", unique: true
   end
 
-  add_foreign_key "days", "restaurants"
   add_foreign_key "locations", "restaurants"
 end

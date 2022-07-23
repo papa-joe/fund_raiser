@@ -14,7 +14,18 @@ class CreateRestaurants < ActiveRecord::Migration[7.0]
       t.float :avg_menu_price, null: false
       t.integer :percent_donation, null: false
       t.string :website, null: false
-      t.string :logo
+      t.string :logo, null: false
+      t.string :monday, null: false
+      t.string :tuesday, null: false
+      t.string :wednesday, null: false
+      t.string :thursday, null: false
+      t.string :friday, null: false
+      t.string :saturday, null: false
+      t.string :sunday, null: false
+      t.string :tax, null: false
+      t.string :leader_arrival, null: false
+      t.string :alcohol_sales, null: false
+      t.string :coupons, null: false
 
       t.timestamps
     end

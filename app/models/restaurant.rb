@@ -14,6 +14,10 @@ class Restaurant < ApplicationRecord
     validates :website, presence: true
     validates :logo, presence: true
     validates :password, presence: false
+    validates :tax, presence: false
+    validates :leader_arrival, presence: false
+    validates :alcohol_sales, presence: false
+    validates :coupons, presence: false
     has_many :days, dependent: :destroy
     has_many :locations, dependent: :destroy
 end
