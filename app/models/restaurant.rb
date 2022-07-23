@@ -15,4 +15,5 @@ class Restaurant < ApplicationRecord
     validates :logo, presence: true
     validates :password, presence: false
     has_many :days, dependent: :destroy
+    has_many :locations, dependent: :destroy
 end

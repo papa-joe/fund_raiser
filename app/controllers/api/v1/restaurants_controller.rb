@@ -14,6 +14,11 @@ class Api::V1::RestaurantsController < ApplicationController
             return
         end
 
+        if !params[:address].present? || !params[:city].present? || !params[:zipcode].present? || !params[:state].present? || !params[:phone].present? 
+            render json: { status: "failed", message: "Enter at least one location"}
+            return
+        end
+
         @restaurant = Restaurant.new({name: params[:name],firstname: params[:firstname],lastname: params[:lastname],email: params[:email],phone: params[:phone],password: params[:password],location_no: params[:location_no],from_time: params[:from_time],to_time: params[:to_time],avg_menu_price: params[:avg_menu_price],percent_donation: params[:percent_donation],website: params[:website],logo: params[:logo]})
 
         if @restaurant.save
@@ -22,7 +27,9 @@ class Api::V1::RestaurantsController < ApplicationController
 
             day = @res_day.days.build({monday: params[:monday], tuesday: params[:tuesday], wednesday: params[:wednesday], thursday: params[:thursday], friday: params[:friday], saturday: params[:saturday], sunday: params[:sunday]})
 
-            if day.save
+            location = @res_day.locations.build({address: params[:address], city: params[:city], zipcode: params[:zipcode], state: params[:state], phone: params[:phone]})
+
+            if day.save && location.save
                 render json: @restaurant, status: :created
             else
                 render json: @restaurant.errors, status: :unprocessable_entity

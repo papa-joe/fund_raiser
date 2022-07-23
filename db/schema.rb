@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_23_104655) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_23_124932) do
   create_table "days", charset: "utf8mb4", force: :cascade do |t|
     t.string "monday"
     t.string "tuesday"
@@ -23,6 +23,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_23_104655) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["restaurant_id"], name: "index_days_on_restaurant_id"
+  end
+
+  create_table "locations", charset: "utf8mb4", force: :cascade do |t|
+    t.string "address"
+    t.string "city"
+    t.string "zipcode"
+    t.string "state"
+    t.string "phone"
+    t.bigint "restaurant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["restaurant_id"], name: "index_locations_on_restaurant_id"
   end
 
   create_table "restaurants", charset: "utf8mb4", force: :cascade do |t|
@@ -45,4 +57,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_23_104655) do
   end
 
   add_foreign_key "days", "restaurants"
+  add_foreign_key "locations", "restaurants"
 end

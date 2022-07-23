@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :restaurants, only: %i[show create update destroy]
       resources :tokens, only: [:create]
       resources :days, only: %i[show index create update]
+      resources :locations, only: %i[show index create]
     end
   end
 end
