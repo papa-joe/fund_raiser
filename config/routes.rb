@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       post 'restaurant/sign_in', to: 'tokens#create'
       post 'restaurant/sign_up', to: 'restaurants#sign_up'
       patch 'restaurant/:id', to: 'userestaurantsrs#update'
+      post 'group', to: 'groups#create'
+      patch 'group/:id', to: 'groups#update'
     end
   end
 end
