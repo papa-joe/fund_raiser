@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_23_215308) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_24_220713) do
   create_table "groups", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
     t.string "group_type"
@@ -36,6 +36,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_23_215308) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["restaurant_id"], name: "index_locations_on_restaurant_id"
+  end
+
+  create_table "meals", charset: "utf8mb4", force: :cascade do |t|
+    t.integer "attendance"
+    t.date "meal_date"
+    t.bigint "user_id", null: false
+    t.bigint "restaurant_id", null: false
+    t.bigint "location_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_meals_on_location_id"
+    t.index ["restaurant_id"], name: "index_meals_on_restaurant_id"
+    t.index ["user_id"], name: "index_meals_on_user_id"
   end
 
   create_table "restaurants", charset: "utf8mb4", force: :cascade do |t|
@@ -79,4 +92,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_23_215308) do
 
   add_foreign_key "groups", "users"
   add_foreign_key "locations", "restaurants"
+  add_foreign_key "meals", "locations"
+  add_foreign_key "meals", "restaurants"
+  add_foreign_key "meals", "users"
 end

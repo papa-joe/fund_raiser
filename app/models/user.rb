@@ -4,4 +4,5 @@ class User < ApplicationRecord
     validates :password_digest, presence: true
     has_secure_password
     has_many :groups, dependent: :destroy
+    has_many :meals, dependent: :destroy
 end

@@ -1,5 +1,6 @@
 class Location < ApplicationRecord
   validates :restaurant_id, presence: true
+  has_many :meals, dependent: :destroy
   belongs_to :restaurant
 
   scope :filter_by_city, lambda { |keyword|

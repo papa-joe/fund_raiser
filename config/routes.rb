@@ -20,6 +20,11 @@ Rails.application.routes.draw do
       patch 'group/:id', to: 'groups#update'
       get 'group/:id', to: 'groups#show'
       get 'groups', to: 'groups#index'
+      # meal routes
+      post 'meal', to: 'meals#create'
+      patch 'meal/:id', to: 'meals#update'
+      get 'meal/:id', to: 'meals#show'
+      get 'meals', to: 'meals#index'
 
       get 'locations', to: 'locations#index'
     end

@@ -18,6 +18,6 @@ class Restaurant < ApplicationRecord
     validates :leader_arrival, presence: false
     validates :alcohol_sales, presence: false
     validates :coupons, presence: false
-    has_many :days, dependent: :destroy
     has_many :locations, dependent: :destroy
+    has_many :meals, dependent: :destroy
 end
