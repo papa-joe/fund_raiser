@@ -1,0 +1,5 @@
+class RestaurantSerializer
+  include FastJsonapi::ObjectSerializer
+  attributes :name, :email, :phone
+  has_many :locations
+end
