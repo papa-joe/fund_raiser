@@ -2,7 +2,10 @@ class Api::V1::LocationsController < ApplicationController
     before_action :check_login, only: %i[create]
 
     def index
-        render json: Location.all
+        @locations = Location.search(params)
+        options = { include: [:restaurant] }
+        render json: LocationSerializer.new(@locations, options
+        ).serializable_hash
     end
 
     def show

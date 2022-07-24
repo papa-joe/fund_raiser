@@ -20,6 +20,8 @@ Rails.application.routes.draw do
       patch 'group/:id', to: 'groups#update'
       get 'group/:id', to: 'groups#show'
       get 'groups', to: 'groups#index'
+
+      get 'locations', to: 'locations#index'
     end
   end
 end
