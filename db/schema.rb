@@ -13,7 +13,7 @@
 ActiveRecord::Schema[7.0].define(version: 2022_07_23_215308) do
   create_table "groups", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"
-    t.string "type"
+    t.string "group_type"
     t.string "description"
     t.string "cheque_name"
     t.string "address"

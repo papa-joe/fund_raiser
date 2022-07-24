@@ -2,9 +2,17 @@ class Api::V1::RestaurantsController < ApplicationController
     before_action :set_restaurant, only: %i[show update destroy]
     before_action :check_owner, only: %i[update destroy]
 
-    # GET /users/1
+    # GET /restaurant/1
     def show
-        render json: @restaurant
+        options = { include: [:locations] }
+        render json: RestaurantSerializer.new(@restaurant, options).serializable_hash
+    end
+
+    def index
+        @restaurants = Restaurant.all
+        options = { include: [:locations] }
+        render json: RestaurantSerializer.new(@restaurants, options
+        ).serializable_hash
     end
 
     def sign_up
@@ -23,7 +31,7 @@ class Api::V1::RestaurantsController < ApplicationController
             location = @res_day.locations.build({address: params[:address], city: params[:city], zipcode: params[:zipcode], state: params[:state], phone: params[:phone]})
 
             if location.save
-                render json: @restaurant, status: :created
+                render json: RestaurantSerializer.new(@restaurant).serializable_hash, status: :created
             else
                 render json: @restaurant.errors, status: :unprocessable_entity
             end
@@ -32,18 +40,18 @@ class Api::V1::RestaurantsController < ApplicationController
         end
     end
 
-    # PATCH/PUT /users/1
+    # PATCH/PUT /restaurant/1
     def update
         @restaurant = Restaurant.find(params[:id])
 
         if @restaurant.update({name: params[:name],firstname: params[:firstname],lastname: params[:lastname],email: params[:email],phone: params[:phone],location_no: params[:location_no],from_time: params[:from_time],to_time: params[:to_time],avg_menu_price: params[:avg_menu_price],percent_donation: params[:percent_donation],website: params[:website],logo: params[:logo], monday: params[:monday], tuesday: params[:tuesday], wednesday: params[:wednesday], thursday: params[:thursday], friday: params[:friday], saturday: params[:saturday], sunday: params[:sunday], tax: params[:tax], leader_arrival: params[:leader_arrival], alcohol_sales: params[:alcohol_sales], coupons: params[:coupons]})
-            render json: @restaurant, status: :ok
+            render json: RestaurantSerializer.new(@restaurant).serializable_hash, status: :ok
         else
             render json: @restaurant.errors, status: :unprocessable_entity
         end
     end
 
-    # DELETE /users/1
+    # DELETE /restaurant/1
     def destroy
         @restaurant = Restaurant.find(params[:id])
         @restaurant.destroy
@@ -65,6 +73,7 @@ class Api::V1::RestaurantsController < ApplicationController
     end
 
     def check_owner
+        @restaurant = Restaurant.find(params[:id])
         head :forbidden unless @restaurant.id == current_restaurant&.id
     end
 end

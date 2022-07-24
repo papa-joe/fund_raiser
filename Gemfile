@@ -51,3 +51,5 @@ end
 gem "bcrypt", "~> 3.1"
 
 gem "jwt", "~> 2.4"
+
+gem "fast_jsonapi", "~> 1.5"
